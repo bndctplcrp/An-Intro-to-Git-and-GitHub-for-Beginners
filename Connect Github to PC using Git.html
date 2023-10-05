@@ -1,0 +1,880 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Connect Github to PC using Git</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="96e9ae80-145f-4de9-9c76-158a36707070" class="page sans"><header><div class="page-header-icon undefined"><img class="icon" src="https://www.notion.so/icons/circle_gray.svg"/></div><h1 class="page-title">Connect Github to PC using Git</h1><p class="page-description"></p><table class="properties"><tbody><tr class="property-row property-row-relation"><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesRelation"><path d="M13.1475 10.5869V3.72363C13.1475 3.25195 12.833 2.93066 12.3477 2.93066H5.48438C5.02637 2.93066 4.70508 3.27246 4.70508 3.67578C4.70508 4.07227 5.05371 4.40039 5.46387 4.40039H7.89746L10.8438 4.30469L9.59961 5.39844L3.08496 11.9199C2.92773 12.0771 2.8457 12.2686 2.8457 12.46C2.8457 12.8564 3.20801 13.2256 3.61816 13.2256C3.80957 13.2256 3.99414 13.1504 4.15137 12.9932L10.6729 6.47168L11.7803 5.22754L11.6641 8.05762V10.6074C11.6641 11.0176 11.9922 11.373 12.4023 11.373C12.8057 11.373 13.1475 11.0312 13.1475 10.5869Z"></path></svg></span>Training</th><td><a href="https://www.notion.so/The-Odin-Projects-dae04cd679674471921d6a05eb5fc7cc?pvs=21"><img class="icon" src="https://www.notion.so/icons/folder_gray.svg"/>The Odin Projects</a></td></tr><tr class="property-row property-row-checkbox"><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesCheckbox"><path d="M3.85742 14.4561H12.1357C13.6123 14.4561 14.3779 13.6904 14.3779 12.2344V3.91504C14.3779 2.45215 13.6123 1.69336 12.1357 1.69336H3.85742C2.38086 1.69336 1.61523 2.45215 1.61523 3.91504V12.2344C1.61523 13.6973 2.38086 14.4561 3.85742 14.4561ZM3.93945 13.1162C3.30371 13.1162 2.95508 12.7812 2.95508 12.1182V4.02441C2.95508 3.36133 3.30371 3.0332 3.93945 3.0332H12.0537C12.6826 3.0332 13.0381 3.36133 13.0381 4.02441V12.1182C13.0381 12.7812 12.6826 13.1162 12.0537 13.1162H3.93945ZM7.26855 11.3115C7.51465 11.3115 7.72656 11.1885 7.87012 10.9697L10.9258 6.19141C11.0146 6.04785 11.0967 5.88379 11.0967 5.72656C11.0967 5.3916 10.7959 5.16602 10.4746 5.16602C10.2695 5.16602 10.085 5.27539 9.94141 5.50781L7.24121 9.8418L5.96973 8.22168C5.80566 8.00977 5.6416 7.93457 5.43652 7.93457C5.10156 7.93457 4.8418 8.20117 4.8418 8.54297C4.8418 8.70703 4.90332 8.85742 5.01953 9.00098L6.63281 10.9697C6.81738 11.209 7.01562 11.3115 7.26855 11.3115Z"></path></svg></span>Completed </th><td><div class="checkbox checkbox-off"></div></td></tr></tbody></table></header><div class="page-body"><p id="347c9dcd-c053-4967-97c0-a83ddc8b2a3d" class="">To set your local default git branch name  from <code>master </code>to <code>main</code></p><p id="0ec7a153-bc71-4160-8031-ca551bd127e4" class="">use this command</p><pre id="e42cf9f3-5e84-4076-b2ca-c26b16139907" class="code"><code>$ git config --global init.defaultBranch main</code></pre><h1 id="5e7e96ae-0e88-416b-aaa2-ad1f73399459" class="">Create a repository on Github</h1><ol type="1" id="143862bb-adc1-44e7-aef4-ab04bf4c1c6f" class="numbered-list" start="1"><li>Go to <code>Repositories</code> section</li></ol><ol type="1" id="4c979b5b-8a37-4d59-9b69-5211a95b68ec" class="numbered-list" start="2"><li>click <code>New</code></li></ol><ol type="1" id="16e2c140-1119-4fe9-b7b3-df0b66708e8a" class="numbered-list" start="3"><li>Input the <code>repository name</code></li></ol><ol type="1" id="78e22cd2-9d12-4df4-aa7f-13eef62d85ed" class="numbered-list" start="4"><li>Input <code>Description</code></li></ol><ol type="1" id="48674b10-e421-44ab-8b86-11438aee98ea" class="numbered-list" start="5"><li>Choose <code>Public </code>or <code>Private</code></li></ol><ol type="1" id="ae12dd76-9660-41bc-b514-023b3a3b6025" class="numbered-list" start="6"><li>Check <code>Add README file</code></li></ol><ol type="1" id="91650897-e202-43c9-9f67-04a3a036cbae" class="numbered-list" start="7"><li>click <code>Create repository</code></li></ol><h1 id="3d7a9cb1-a942-4d37-84a8-d024e4ac784c" class="">Get files to and from Github</h1><ol type="1" id="5b63d46e-1445-41a5-b100-60fd1f539e7c" class="numbered-list" start="1"><li>You wil redirect to <code>Repositories</code></li></ol><ol type="1" id="a0790589-9b2b-4587-ad13-5d8cb15edbc5" class="numbered-list" start="2"><li>Click your repo you want to clone</li></ol><ol type="1" id="4dcc0f04-5174-4c39-a322-73c9dd1d4d2a" class="numbered-list" start="3"><li>At <code>code </code>section</li></ol><ol type="1" id="1820f126-a1cd-4f04-9649-39164e031619" class="numbered-list" start="4"><li>go to <code>SSH</code></li></ol><ol type="1" id="3954d30d-f150-464c-bc6b-5adbd0a9cf81" class="numbered-list" start="5"><li>copy  the link</li></ol><ol type="1" id="2cad5375-74f2-40be-8788-d6e0cb0d9949" class="numbered-list" start="6"><li>Open Git Bash Application from your PC</li></ol><ol type="1" id="c7d7391f-7964-4515-9133-5b43dd55dd31" class="numbered-list" start="7"><li>Input the following command:</li></ol><pre id="66e4d2c0-62ed-4c80-b20d-c79e066b4bf3" class="code"><code>$ mkdir repos</code></pre><p id="dd050cac-0c4d-4538-a6f1-a5062ffc34a2" class="">This command creates a new directory named &quot;repos&quot; in your current location.</p><p id="f91e32a6-60cf-4070-8d39-35a40482bb2a" class="">
+</p><pre id="74038b14-32b5-46a8-b771-f099b3804199" class="code"><code>$ cd repos/</code></pre><p id="687e3a8e-b931-4412-ba78-32b2fd97e1ff" class="">This command changes your current working directory to the &quot;repos&quot; directory you just created.</p><p id="74b9f661-9004-4597-8e50-6f11f97a8aae" class="">
+</p><ol type="1" id="247cf087-3737-41cc-80f1-22f95d5bb29b" class="numbered-list" start="8"><li>Time o clone your repository from Github onto your computer.<p id="f6ce5d15-f6ec-467c-b815-ef339452045d" class="">Use the SSH URl you copied.  </p></li></ol><pre id="5428aab7-6572-4bbe-95c7-b031ec6b6b6e" class="code"><code>$ git clone git@github.com:USER-NAME/REPOSITORY-NAME.git
+
+EXAMPLE:
+$ git clone git@github.com:bndctplcrp/git_test.git
+
+OUTPUT:
+Cloning into &#x27;git_test&#x27;...
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (3/3), done.</code></pre><p id="3d2ad003-3fa5-4c1b-8fa2-7e5828585bd5" class="">This command clones (downloads) a Git repository from the URL</p><p id="d63474da-587c-428d-b879-9e04a61812c5" class="">You successfully connected the repository to your localmachine.</p><p id="94c820e2-4b94-4452-8d31-bb475bf8269b" class="">
+</p><ol type="1" id="4b9788cd-27b4-45f7-956a-d5edd7d54903" class="numbered-list" start="9"><li>To test your repository in your computer use this command.</li></ol><pre id="b7f4db16-9d8d-40b1-96dd-757c5fdbf1e7" class="code"><code>$ cd nameOfTheRepository/
+
+Example :
+$ cd git_test/
+
+OUTPUT:
+benedict policarpio@DESKTOP-NU2NS3D MINGW64 ~/repos/git_test (main)
+//as you can see your corrent working directory is repos/git_test(main)
+
+</code></pre><p id="03214bb0-e4fb-4315-b95f-7671b14a67d0" class="">The command <code><strong>cd git_test/</strong></code> is used to change your current working directory to the &quot;git_test&quot; directory.</p><p id="57048592-dc62-4c25-b8b5-baf5f4ae7e63" class="">Once you&#x27;re inside the &quot;git_test&quot; directory, you can perform various operations related to that directory, such as running <strong><em>Git commands</em></strong>,<strong><em> creating</em></strong> or <strong><em>modifying files</em></strong>, and so on.</p><p id="ab95ce7e-8af0-400d-b1a6-7911e69f4ea2" class="">
+</p><ol type="1" id="f55d5eb7-8860-40d2-8c02-0086c508d3a8" class="numbered-list" start="10"><li>Display information of you remote repository.</li></ol><pre id="4e4f1f1e-3879-4da9-9e43-3b458bf754e8" class="code"><code>benedict policarpio@DESKTOP-NU2NS3D MINGW64 ~/repos/git_test (main)
+$ git remote -v
+
+OUTPUT:
+origin  https://github.com/username/repo.git (fetch)
+origin  https://github.com/username/repo.git (push)
+
+Sample Output:
+origin  git@github.com:bndctplcrp/git_test.git (fetch)
+origin  git@github.com:bndctplcrp/git_test.git (push)</code></pre><p id="9ce97457-463f-4b1c-ae0c-3bd6ce8921a6" class="">When you run this command, it will show you the URLs of the remote repositories and their corresponding fetch and push URLs</p><p id="bf73e2e6-12c0-4e69-92af-8c14dd2d4ad0" class="">
+</p><h1 id="79f2db8c-0018-418a-a04a-31a619195b0a" class="">Use the Git workflow</h1><ol type="1" id="55c84b50-7aa5-49f2-85a3-a89a6becf5ca" class="numbered-list" start="1"><li>To create a new empty file. <code> $ touch</code></li></ol><pre id="7d22e21a-1f70-4a6d-8176-ba0ccd8b6ca4" class="code"><code>benedict policarpio@DESKTOP-NU2NS3D MINGW64 ~/repos/git_test (main)
+$ touch nameOfFile.extension
+
+Example:
+touch hello_world.txt</code></pre><p id="0dc30e72-e3f3-405d-b3ec-d18e0104e37b" class="">After running this command, you will have a file named &quot;hello_world.txt&quot; in the same directory where you executed the command. You can then open and edit this file as needed for your project or task.</p><p id="9b5d7d36-2c45-44fe-a60a-81ac0ab0166a" class="">
+</p><ol type="1" id="ba2fd8b5-df06-4f96-bcc6-6c1a80919eff" class="numbered-list" start="2"><li>To display current status ofyour local Git repository.</li></ol><pre id="dbbf5339-17d0-476a-976f-0ccbd945e976" class="code"><code>benedict policarpio@DESKTOP-NU2NS3D MINGW64 ~/repos/git_test (main)
+$ git status
+
+OUTPUT:
+On branch main
+Your branch is up to date with &#x27;origin/main&#x27;.
+
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+        hello_world.txt
+
+nothing added to commit but untracked files present (use &quot;git add&quot; to track)</code></pre><p id="a0582890-cc88-4192-be54-ee169e7c4ee6" class="">When you run this command, Git provides information about the state of your repository, including details about any untracked files, changes that have been made but not yet committed, and the status of your branches.</p><p id="9de364d0-71fa-4953-8fff-938652b52ed7" class="">
+</p><ol type="1" id="ed565415-7574-4a72-9327-9f05e7b46afc" class="numbered-list" start="3"><li>To stage the file for the next commit in your local Git repository .<p id="df743522-3c25-4916-b22e-858ecd0cb2d0" class="">Use <code><strong>git add</strong></code><strong>, </strong>is like preparing your changes for saving.</p></li></ol><pre id="92aff4da-b985-4d99-87d8-c73a6a76a048" class="code"><code>$ git add nameOfFile.extension
+
+
+Example:
+benedict policarpio@DESKTOP-NU2NS3D MINGW64 ~/repos/git_test (main)
+$ git add hello_world.txt</code></pre><p id="fb55a371-0bde-40ed-af1b-e6fb89c5a636" class="">When you run this command, you are telling Git that you want to include the changes made to &quot;<code>hello_world.txt</code>&quot; in the next commit. </p><p id="61dfcf9b-a7ff-43e8-a7d9-74c2e7a06a35" class="">These changes might be the addition of a new file, modifications to an existing file, or even file deletions. Staging a file is a necessary step before committing changes in Git.</p><p id="cbab18ab-b2b3-4c3a-90c6-0bdf379c7c58" class="">
+</p><p id="ec4fe71d-8513-4d0a-9331-dc075e3376e2" class="">
+</p><ol type="1" id="90a3db01-7d30-4584-9a20-f93886ebb248" class="numbered-list" start="4"><li>You can check the status of staged changes using <code><strong>git status</strong></code><strong> .</strong></li></ol><pre id="158522f7-17d5-4bc0-a9c1-ee9f23e93930" class="code"><code>benedict policarpio@DESKTOP-NU2NS3D MINGW64 ~/repos/git_test (main)
+$ git status
+
+OUTPUT EXAMPLE:
+On branch main
+Your branch is up to date with &#x27;origin/main&#x27;.
+
+Changes to be committed:
+  (use &quot;git restore --staged &lt;file&gt;...&quot; to unstage)
+        new file:   hello_world.txt</code></pre><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="f527608f-d49f-433f-82f5-a2e6d529eb29"><div style="font-size:1.5em"><span class="icon">🧑🏻‍🏫</span></div><div style="width:100%">The output you provided from <code>git status</code> means the following:<ol type="1" id="b2241dc5-ce08-4e72-ab25-d8df8d68f31a" class="numbered-list" start="1"><li>You are currently on the &quot;<code>main</code>&quot; branch.</li></ol><ol type="1" id="6034c2db-fbb0-4dc0-8730-7255a4fdbc7d" class="numbered-list" start="2"><li>Your local branch (&quot;main&quot;) is up to date with the corresponding branch on the remote repository (&quot;<code>origin/main</code>&quot;), meaning there are no new commits on the remote that you need to fetch or integrate into your branch.</li></ol><ol type="1" id="d5cdfd7b-ba46-49b1-85ff-22740b304be9" class="numbered-list" start="3"><li>You have made changes that are staged and ready to be committed. Specifically, you have a new file called &quot;hello_world.txt&quot; that you&#x27;ve added to the staging area. These staged changes will become part of your next commit.</li></ol><p id="2c31c56c-71ae-42c3-a94e-13850a5d5876" class="">In summary, the output confirms that you have prepared the &quot;hello_world.txt&quot; file for a commit, and you can proceed to commit these changes using <code>git commit</code> to save them in your Git repository&#x27;s history.</p><p id="c16747ff-f74f-437e-84e4-552d4cf3251a" class="">
+</p></div></figure><p id="3e679f6c-6f0a-4999-9f9c-252b761c3c00" class="">
+</p><ol type="1" id="c1cb142c-e277-4edc-82a6-013d48725265" class="numbered-list" start="5"><li>To create a new commit in your Git repository use  <code>git commit -m</code>  .</li></ol><pre id="02874b47-9f64-4fa4-be59-cc1b92cc9589" class="code"><code>benedict policarpio@DESKTOP-NU2NS3D MINGW64 ~/repos/git_test (main)
+$ git commit -m &quot;Add hello_world.txt&quot;
+
+OUTPUT EXAMPLE:
+[main c30baa8] Add hello_world.txt
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 hello_world.txt</code></pre><p id="c27a76bf-382a-42e0-892a-0db0cc61b5ae" class="">It creates a snapshot of the current state of your project and records it in your Git history.</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="24ebd966-410f-4b70-8ce8-264c54b7e2f8"><div style="font-size:1.5em"><span class="icon">🧑🏻‍🏫</span></div><div style="width:100%">Simplified explanation of the input:<ul id="e6749c9f-b37f-485d-88f0-c9fbbf09feae" class="bulleted-list"><li style="list-style-type:disc"><code><strong>git commit</strong></code>: This is the Git command to create a commit.</li></ul><ul id="b77b42d7-56ac-45b8-91f0-7ddb286ee4df" class="bulleted-list"><li style="list-style-type:disc"><code><strong>m</strong></code>: This flag is used to specify the commit message.</li></ul><ul id="826a59fc-3359-449f-a2be-e6fe35fb774c" class="bulleted-list"><li style="list-style-type:disc"><code><strong>&quot;Your commit message here&quot;</strong></code>: This is where you should provide a brief and informative message describing the changes you made in this commit. The message should be enclosed in double quotes.</li></ul><p id="8798f0e0-6177-47ca-8b08-ad55cc77c57f" class="">
+</p></div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="d55c4521-a4af-4b79-bf9a-7d5b51fac2f2"><div style="font-size:1.5em"><span class="icon">🧑🏻‍🏫</span></div><div style="width:100%">Simplified explanation of the output:<ul id="4141fb20-0419-445d-b9d9-25116cc3cc14" class="bulleted-list"><li style="list-style-type:disc"><code>[main c30baa8] Add hello_world.txt</code>: This means you took a picture (commit) of your project, and you gave it a title (&quot;Add hello_world.txt&quot;). The &quot;main&quot; is like a chapter in your project&#x27;s history book, and &quot;c30baa8&quot; is a unique code for this snapshot.</li></ul><ul id="cc26f002-cb7c-4247-9283-41624bf01188" class="bulleted-list"><li style="list-style-type:disc"><code>1 file changed, 0 insertions(+), 0 deletions(-)</code>: This tells you that you made a change to one thing (a file), but you didn&#x27;t add or remove anything from it. You just created a new file.</li></ul><ul id="2d23c192-0650-4560-94ab-4562bfa967ab" class="bulleted-list"><li style="list-style-type:disc"><code>create mode 100644 hello_world.txt</code>: This confirms that you added a new file called &quot;hello_world.txt&quot; to your project.</li></ul><p id="db097174-7959-40bb-ac78-876907a8c057" class="">In short, you&#x27;ve added a &quot;snapshot&quot; of your project with a new file called &quot;hello_world.txt&quot; to your Git history. It&#x27;s like taking a photo and giving it a title to remember what you did.</p><p id="1d388c38-ebe5-49fe-8a6e-a839513a025a" class="">
+</p></div></figure><p id="2bab2fe3-84d0-41ca-a082-ddbec7e72ff4" class="">
+</p><ol type="1" id="17559020-884d-4fbe-9122-a922b1cb533b" class="numbered-list" start="5"><li>You can use <code>git status</code> again  to  check the status of staged changes.</li></ol><pre id="03045d9b-03f5-4ea7-b2fd-b36e81e55834" class="code"><code>benedict policarpio@DESKTOP-NU2NS3D MINGW64 ~/repos/git_test (main)
+$ git status
+
+OUTPUT:
+On branch main
+Your branch is ahead of &#x27;origin/main&#x27; by 1 commit.//
+  (use &quot;git push&quot; to publish your local commits)
+
+nothing to commit, working tree clean</code></pre><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="aaf99754-8acd-4a05-8d06-aab9d2580897"><div style="font-size:1.5em"><span class="icon">🧑🏻‍🏫</span></div><div style="width:100%"><code>&quot;Your branch is ahead of &#x27;origin/main&#x27; by 1 commit&quot;</code>: This means that your local &quot;main&quot; branch has one more commit than the remote branch called &#x27;origin/main.&#x27; In other words, you have made a new commit locally that hasn&#x27;t been pushed to the remote repository yet.</div></figure><p id="58c5b58e-6b1f-4c4e-b413-5a6d27912c7e" class="">
+</p><ol type="1" id="51ceb4e1-40a7-4c4b-ac3c-138b3d61db90" class="numbered-list" start="6"><li>The <code><strong>git log</strong></code> output you provided shows the commit history of your Git repository.</li></ol><pre id="b2f16a6e-20d5-45a7-8b8b-76465fcce407" class="code"><code>benedict policarpio@DESKTOP-NU2NS3D MINGW64 ~/repos/git_test (main)
+$ git log
+
+OUTPUT:
+
+commit c30baa8ca5a8abe0e09662913ca1f19323825984 (HEAD -&gt; main)
+Author: bndctplcrp &lt;benedictpolicarpio08@gmail.com&gt;
+Date:   Wed Oct 4 23:26:05 2023 +0800
+
+    Add hello_world.txt
+
+commit f250aa505596e9595a97412b40e11b922f2bcbd1 (origin/main, origin/HEAD)
+Author: BENEDICT POLICARPIO &lt;142641358+bndctplcrp@users.noreply.github.com&gt;
+Date:   Wed Oct 4 23:11:00 2023 +0800
+
+    Initial commit
+</code></pre><p id="cce53141-4c33-4529-9d29-1a0e2097805f" class="">
+</p><h1 id="1d4641a4-68cd-4791-9b6c-6674b9ebc6a7" class=""><strong><strong>Modify a file</strong></strong></h1><ol type="1" id="f0a9c68a-0008-463c-9c2b-f0dcc273f6c0" class="numbered-list" start="1"><li>To open the current directory in VS code.</li></ol><pre id="8398aaf8-fd0b-405e-9851-2a85219687d9" class="code"><code>benedict policarpio@DESKTOP-NU2NS3D MINGW64 ~/repos/git_test (main)
+$ code .</code></pre><p id="ff03000a-c95a-468d-9ee6-ce003cade950" class="">When you run this command in your terminal, it launches VS Code and opens the files and folders located in your current working directory, which, in your case, is the &quot;git_test&quot; directory.</p><p id="f5c51664-e39f-453c-80c5-8071907ef109" class="">
+</p><ol type="1" id="c86e1ca3-feb7-4aff-8cdd-4ed760918708" class="numbered-list" start="2"><li>You can now modify add files in your repo.<p id="efd8ccf3-3e3f-4214-88ba-da4d7e3902d6" class="">Example make a <code>README.md</code> file and save the file with  <code><strong>Ctrl</strong></code><code> + </code><code><strong>S</strong></code></p></li></ol><p id="288d767e-42c6-47a2-bf0d-2431b69a07a8" class="">
+</p><ol type="1" id="6e5e3a51-9810-466d-870d-b0474cbe06c2" class="numbered-list" start="3"><li>You can use your Visual code to input the commands using built-in terminal. Pressing <code><strong>Ctrl</strong></code><code> + </code><code><strong>`</strong></code><code> </code>(backtick)</li></ol><p id="25cc5a3f-36c8-46ca-adf3-b36571056d5b" class="">
+</p><ol type="1" id="d336c9e1-ec65-4000-8509-55641d424830" class="numbered-list" start="4"><li>Use the  <code>git status</code>  in VS built-in Terminal to check the status of staged changes.</li></ol><pre id="91ac1a51-0961-4524-b997-31b25896a3b4" class="code"><code>INPUT:
+PS C:\Users\bened\repos\git_test&gt; git status
+
+OUTPUT:
+Your branch is ahead of &#x27;origin/main&#x27; by 1 commit.
+  (use &quot;git push&quot; to publish your local commits)
+Changes not staged for commit:
+  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+  (use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory)
+        modified:   README.md
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)</code></pre><p id="f010f31f-414b-4ebf-b7a7-eb4aa578e66b" class="">
+</p><ol type="1" id="ae72e723-f2a6-4192-a3af-1983cc17f342" class="numbered-list" start="5"><li>Use <code><strong>git add .</strong></code><strong> </strong>to stage all changes in your current working directory (and its subdirectories) for the next commit.</li></ol><pre id="fedc0626-f68b-4cc5-a314-599aeef918c6" class="code"><code>INPUT:
+PS C:\Users\bened\repos\git_test&gt; git add .
+
+OUTPUT:
+On branch main
+Your branch is ahead of &#x27;origin/main&#x27; by 1 commit.
+
+Changes to be committed:
+  (use &quot;git restore --staged &lt;file&gt;...&quot; to unstage)
+        modified:   README.md
+        modified:   hello_world.txt</code></pre><p id="d5c4a3a7-2461-40be-a283-86efbccc4c8e" class="">This command is used to stage all changes in your current working directory (and its subdirectories) for the next commit. The dot (<code><strong>.</strong></code>) represents the current directory, so you are staging all changes in your project.</p><p id="cf36933a-673d-4705-97af-5cd196dc5b0a" class="">
+</p><p id="a458df5f-3353-4cd3-97ef-03d360b835de" class="">or </p><p id="518429ef-cc85-4a3f-8740-69f5b2528ab8" class="">
+</p><p id="975087cc-a559-457b-b217-b16d932d563a" class="">Use <code> git add &lt;file&gt;...</code> </p><pre id="5a736d7d-825c-4555-8422-e8c91293f78f" class="code"><code>PS C:\Users\bened\repos\git_test&gt; git add README.md</code></pre><p id="7ee9ce40-8a39-4cb6-8cef-d64558b7df81" class="">
+</p><ol type="1" id="253e32df-3e9a-485c-a62d-737d189fb226" class="numbered-list" start="5"><li>After running <code><strong>git add .</strong></code><strong> or </strong><code>git add &lt;file&gt;</code> you can use <code><strong>git status</strong></code> to confirm that the changes you want to commit have been successfully staged.</li></ol><pre id="16f3057c-2579-4bb3-a651-33e893c0a992" class="code"><code>git status</code></pre><p id="be14e2d3-178c-4430-96e2-f6b6ae36b6d6" class="">
+</p><ol type="1" id="5791ef31-4f9e-4082-9154-77ccd4148938" class="numbered-list" start="6"><li>Finally, you can proceed to create a commit that includes the staged changes using the <code><strong>git commit</strong></code> command:</li></ol><pre id="89c199ef-4eb2-4d99-b1f4-4735eb57fae1" class="code"><code>git commit -m &quot;Your commit message here&quot;
+
+OUTPUT:
+[main 8901dff] Edit README.md and hello_world.txt
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+</code></pre><p id="0caf374c-fa24-42b5-9559-b7430c48ed3f" class="">
+</p><ol type="1" id="afba41bc-791e-4fc5-99d5-01cf8787fe12" class="numbered-list" start="7"><li>Then, type <code>git status</code> once again, which will output “<em>nothing to commit</em>”.</li></ol><pre id="b3432bb7-51ec-4ecd-b5bd-fd704cc75839" class="code"><code>INPUT:
+PS C:\Users\bened\repos\git_test&gt; git status
+
+OUTPUT:
+On branch main
+Your branch is ahead of &#x27;origin/main&#x27; by 2 commits.
+  (use &quot;git push&quot; to publish your local commits)
+
+nothing to commit, working tree clean</code></pre><p id="253fa7e9-d53a-4236-b8f6-6c2949ad4a01" class="">
+</p><ol type="1" id="62a48453-b5fd-4ee3-8552-01c5ec166216" class="numbered-list" start="8"><li>Take one last look at your commit history by typing <code>git log</code>. You should now see three entries.</li></ol><pre id="78d88e44-d005-4730-8490-389f4cc3adf1" class="code"><code>INPUT:
+PS C:\Users\bened\repos\git_test&gt; git log
+
+OUTPUT:
+commit 8901dff33d00dd71cc396b4593b632a612c1e673 (HEAD -&gt; main)
+Author: bndctplcrp &lt;benedictpolicarpio08@gmail.com&gt;
+Date:   Wed Oct 4 23:34:19 2023 +0800
+
+    Edit README.md and hello_world.txt
+
+commit c30baa8ca5a8abe0e09662913ca1f19323825984
+Author: bndctplcrp &lt;benedictpolicarpio08@gmail.com&gt;
+Date:   Wed Oct 4 23:26:05 2023 +0800
+
+    Add hello_world.txt
+
+commit c30baa8ca5a8abe0e09662913ca1f19323825984
+Author: bndctplcrp &lt;benedictpolicarpio08@gmail.com&gt;
+Date:   Wed Oct 4 23:26:05 2023 +0800
+
+    Add hello_world.txt
+
+commit f250aa505596e9595a97412b40e11b922f2bcbd1 (origin/main, origin/HEAD)
+Author: BENEDICT POLICARPIO &lt;142641358+bndctplcrp@users.noreply.github.com&gt;
+Date:   Wed Oct 4 23:11:00 2023 +0800
+
+    Initial commit</code></pre><p id="1624f858-fcb0-4b74-8764-3bf2409684f1" class="">
+</p><h1 id="2c9521cb-05ce-4855-a34e-aa7f2d07ed09" class="">Push your work to Github</h1><p id="bb957736-e401-4f89-b519-c14e4b901773" class="">
+</p><ol type="1" id="4a62b3a4-7bba-44e6-83bd-da8efdabf150" class="numbered-list" start="1"><li>To upload and synchronize your local repository&#x27;s commits and branches with a remote repository use   <code>git push</code> or  <code>git push origin main</code>.</li></ol><pre id="80d40f16-d3d7-42a6-bdee-915932eef2ee" class="code"><code>INPUT:
+benedict policarpio@DESKTOP-NU2NS3D MINGW64 ~/repos/git_test (main)
+$ git push
+
+OUTPUT:
+Enumerating objects: 9, done.
+Counting objects: 100% (9/9), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (7/7), 662 bytes | 662.00 KiB/s, done.
+Total 7 (delta 0), reused 0 (delta 0), pack-reused 0
+To github.com:bndctplcrp/git_test.git
+   f250aa5..8901dff  main -&gt; main</code></pre><p id="05567ee4-72a8-48fc-856d-90a9a0045b17" class="">or</p><pre id="6e4479d5-a411-4228-809d-504a9345916c" class="code"><code>INPUT:
+benedict policarpio@DESKTOP-NU2NS3D MINGW64 ~/repos/git_test (main)
+$ git push origin main
+
+OUTPUT:
+Everything up-to-date</code></pre><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2c5c6e61-cd82-4eb3-8d97-53ead8499382"><div style="font-size:1.5em"><span class="icon">🧑🏻‍🏫</span></div><div style="width:100%">Certainly, let&#x27;s simplify it:<ul id="ccdd3ff9-d92c-48cb-8dbd-fe3c98720bcc" class="bulleted-list"><li style="list-style-type:disc"><code>git push origin main</code>: This command explicitly tells Git to push your local changes from the &quot;main&quot; branch to the remote repository named &quot;origin.&quot;</li></ul><ul id="3eb96bca-95ff-466e-884b-a683ae1baee2" class="bulleted-list"><li style="list-style-type:disc"><code>git push</code>: This shorthand command assumes you want to push your current branch to a remote repository named &quot;origin.&quot; It&#x27;s convenient when the local and remote branches have the same name.</li></ul><p id="39017ae4-ce4e-4b4b-84c5-f263cdc61610" class="">In short, <code>git push origin main</code> is more specific about what and where you&#x27;re pushing, while <code>git push</code> assumes you want to push your current branch to the remote repository named &quot;origin.&quot;</p><p id="29464fc6-5399-4e93-8c1c-ac5366ccbc8a" class="">
+</p></div></figure><p id="5d7c3360-6c20-4508-b512-651302805594" class="">
+</p><ol type="1" id="61a9feb0-65aa-44da-bc59-bb2e66596a1b" class="numbered-list" start="2"><li>Type <code>git status</code> one final time. It should output “<em>Your branch is up to date with ‘origin/main’. nothing to commit, working tree clean</em>”.</li></ol><pre id="c8ad6709-f280-429f-9f2f-cb22944f6130" class="code"><code>
+INPUT:
+benedict policarpio@DESKTOP-NU2NS3D MINGW64 ~/repos/git_test (main)
+$ git status
+
+OUTPUT:
+On branch main
+Your branch is up to date with &#x27;origin/main&#x27;.
+
+nothing to commit, working tree clean</code></pre><p id="5374d29b-d038-4066-af35-2fb646faf3f5" class="">
+</p><ol type="1" id="193cf8ac-5824-4df1-9d49-f0cbdda32069" class="numbered-list" start="3"><li>Go to your repository  on Github account. You will see all the updates (files) that you pushed from your local machine.</li></ol><figure id="8cc45340-acdd-4f33-956e-f48ccab8c99a" class="image"><a href="Connect%20Github%20to%20PC%20using%20Git%2096e9ae80145f4de99c76158a36707070/Untitled.png"><img style="width:1836px" src="Connect%20Github%20to%20PC%20using%20Git%2096e9ae80145f4de99c76158a36707070/Untitled.png"/></a></figure></div></article></body></html>
